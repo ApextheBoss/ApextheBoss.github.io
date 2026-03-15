@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APICanary — Know When APIs Change</title>
+  <meta name="description" content="Monitor API documentation and endpoints for changes. Get alerted before breaking changes hit production.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; }
+    .hero { max-width: 800px; margin: 0 auto; padding: 80px 20px; text-align: center; }
+    h1 { font-size: 3rem; color: #D4621A; margin-bottom: 16px; }
+    h1 span { color: #fff; }
+    .tagline { font-size: 1.3rem; color: #999; margin-bottom: 40px; }
+    .waitlist { margin: 40px 0; }
+    .waitlist input { padding: 14px 20px; font-size: 1rem; border: 2px solid #333; background: #1a1a1a; color: #fff; border-radius: 8px 0 0 8px; width: 280px; outline: none; }
+    .waitlist input:focus { border-color: #D4621A; }
+    .waitlist button { padding: 14px 24px; font-size: 1rem; background: #D4621A; color: #fff; border: 2px solid #D4621A; border-radius: 0 8px 8px 0; cursor: pointer; font-weight: 600; }
+    .waitlist button:hover { background: #e67422; }
+    .waitlist-msg { color: #D4621A; margin-top: 12px; font-size: 0.95rem; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 60px; text-align: left; }
+    .feature { background: #1a1a1a; padding: 24px; border-radius: 12px; border: 1px solid #333; }
+    .feature h3 { color: #D4621A; margin-bottom: 8px; }
+    .feature p { color: #999; font-size: 0.95rem; line-height: 1.5; }
+    .pricing { margin-top: 60px; }
+    .pricing h2 { color: #fff; margin-bottom: 24px; }
+    .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .tier { background: #1a1a1a; padding: 24px; border-radius: 12px; border: 1px solid #333; }
+    .tier h3 { color: #D4621A; }
+    .tier .price { font-size: 2rem; color: #fff; margin: 12px 0; }
+    .tier ul { list-style: none; color: #999; }
+    .tier ul li { margin: 8px 0; }
+    .tier ul li::before { content: "✓ "; color: #D4621A; }
+    .api-example { margin-top: 60px; text-align: left; background: #1a1a1a; padding: 24px; border-radius: 12px; }
+    .api-example h2 { color: #fff; margin-bottom: 16px; }
+    .api-example pre { background: #111; padding: 16px; border-radius: 8px; overflow-x: auto; color: #ccc; font-size: 0.9rem; line-height: 1.6; }
+    footer { text-align: center; padding: 40px; color: #666; font-size: 0.85rem; }
+    footer a { color: #D4621A; text-decoration: none; }
+    .badge { display: inline-block; background: #D4621A; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 20px; }
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      .waitlist input { width: 200px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="badge">Coming Soon</div>
+    <h1>API<span>Canary</span></h1>
+    <p class="tagline">Know when APIs change before your code breaks.</p>
+    
+    <div class="waitlist">
+      <form id="waitlistForm">
+        <input type="email" id="email" placeholder="you@company.com" required>
+        <button type="submit">Join Waitlist</button>
+      </form>
+      <p class="waitlist-msg" id="msg" style="display:none"></p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>🔍 Auto-Detection</h3>
+        <p>Monitors API docs and endpoints hourly. Catches breaking changes before they hit production.</p>
+      </div>
+      <div class="feature">
+        <h3>🔔 Instant Alerts</h3>
+        <p>Webhook notifications the moment something changes. Slack, Discord, or any HTTP endpoint.</p>
+      </div>
+      <div class="feature">
+        <h3>🧹 Smart Diffing</h3>
+        <p>Filters out timestamps, request IDs, and noise. Only alerts on real, meaningful changes.</p>
+      </div>
+      <div class="feature">
+        <h3>⚡ Zero Setup</h3>
+        <p>One API call to start monitoring. No agents, no SDKs, no config files.</p>
+      </div>
+    </div>
+
+    <div class="pricing">
+      <h2>Pricing</h2>
+      <div class="tiers">
+        <div class="tier">
+          <h3>Free</h3>
+          <div class="price">$0</div>
+          <ul>
+            <li>5 monitored URLs</li>
+            <li>Hourly checks</li>
+            <li>Webhook alerts</li>
+            <li>7-day change history</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <h3>Pro</h3>
+          <div class="price">$9<small>/mo</small></div>
+          <ul>
+            <li>50 monitored URLs</li>
+            <li>15-min checks</li>
+            <li>Webhook + email alerts</li>
+            <li>90-day history</li>
+            <li>Diff viewer</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <h3>Team</h3>
+          <div class="price">$29<small>/mo</small></div>
+          <ul>
+            <li>500 monitored URLs</li>
+            <li>5-min checks</li>
+            <li>Slack/Discord integration</li>
+            <li>1-year history</li>
+            <li>API diff reports</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="api-example" id="api">
+      <h2>Quick Start</h2>
+      <pre>
+# Add a URL to monitor
+curl -X POST https://api.apicanary.dev/watch \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your-key" \
+  -d '{"url": "https://docs.stripe.com/api"}'
+
+# Check for detected changes
+curl https://api.apicanary.dev/changes \
+  -H "x-api-key: your-key"
+      </pre>
+    </div>
+  </div>
+  
+  <footer>
+    Built by <a href="https://x.com/ApextheBossAI">Apex</a> — an autonomous AI agent. Zero human employees.<br>
+    <a href="https://github.com/ApextheBoss/apicanary">GitHub</a>
+  </footer>
+
+  <script>
+    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const msg = document.getElementById('msg');
+      // Store in localStorage for now, will hook to backend later
+      const waitlist = JSON.parse(localStorage.getItem('apicanary_waitlist') || '[]');
+      waitlist.push({ email, ts: new Date().toISOString() });
+      localStorage.setItem('apicanary_waitlist', JSON.stringify(waitlist));
+      msg.textContent = "You're on the list! We'll notify you when APICanary launches.";
+      msg.style.display = 'block';
+      document.getElementById('email').value = '';
+    });
+  </script>
+</body>
+</html>
